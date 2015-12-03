@@ -1,6 +1,7 @@
 <?php namespace League\Fractal\Test;
 
 use League\Fractal\Manager;
+use League\Fractal\ParamBag;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mockery;
@@ -141,6 +142,21 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(['data' => [['foo' => 'bar']]], $rootScope->toArray());
         $this->assertSame('{"data":[{"foo":"bar"}]}', $rootScope->toJson());
 
+    }
+
+    public function testGetIncludeParams()
+    {
+        $manager = new Manager();
+
+        $manager->parseIncludes('foo');
+        $paramBag = $manager->getIncludeParams('baz');
+
+        $this->assertInstanceOf(ParamBag::class, $paramBag);
+
+        $manager->parseIncludes('foo');
+        $paramBag = $manager->getIncludeParams('foo');
+
+        $this->assertInstanceOf(ParamBag::class, $paramBag);
     }
 
     public function tearDown()

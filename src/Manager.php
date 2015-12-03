@@ -91,15 +91,15 @@ class Manager
      *
      * @param string $include
      *
-     * @return \League\Fractal\ParamBag|null
+     * @return \League\Fractal\ParamBag
      */
     public function getIncludeParams($include)
     {
-        if (! isset($this->includeParams[$include])) {
-            return;
-        }
+        $params = [];
 
-        $params = $this->includeParams[$include];
+        if (isset($this->includeParams[$include])) {
+            $params = $this->includeParams[$include];
+        }
 
         return new ParamBag($params);
     }
